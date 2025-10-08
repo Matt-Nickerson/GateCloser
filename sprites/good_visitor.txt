@@ -1,0 +1,33 @@
+<HEADER>
+frames 3
+width 3
+height 6
+color green
+slowdown 4
+</HEADER>
+<BODY>
+ _ 
+|_|
+ O 
+\|/
+ | 
+/ \
+end
+ _ 
+|_|
+ O 
+-|-
+ | 
+/ \
+end
+ _ 
+|_|
+ O 
+/|\
+ | 
+/ \
+end
+</BODY>
+<FOOTER>
+version 1
+</FOOTER>
