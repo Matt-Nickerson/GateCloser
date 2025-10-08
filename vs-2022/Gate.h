@@ -5,14 +5,14 @@ enum class GateState { CLOSED, OPENING, OPEN, CLOSING };
 
 class Gate : public df::Object {
 public:
-	Gate();
+	Gate(bool isOpen);
 	int eventHandler(const df::Event* e) override;
 	GateState getState() const { return state; }
 	df::Box getDoorBox() const { return getBox(); }
 
 
 private:
-	GateState state = GateState::CLOSED;
+	GateState state;
 
 	int frameCount = 1;
 	int lastFrame = 0;

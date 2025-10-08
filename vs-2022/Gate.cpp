@@ -8,12 +8,17 @@
 
 constexpr float KEY_DELAY = 0.5f;
 
-Gate::Gate() {
+Gate::Gate(bool isOpen) {
     setType("gate");
 
     // Start closed and idle
     setSprite("gate_closed_idle");
-    state = GateState::CLOSED;
+    if (isOpen) {
+        state = GateState::OPEN;
+    }
+    else {
+        state = GateState::CLOSED;
+    }
 
     auto* spr = getAnimation().getSprite();
     frameCount = spr ? spr->getFrameCount() : 1;
