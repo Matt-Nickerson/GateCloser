@@ -6,17 +6,15 @@
 #include "LogManager.h"
 #include <chrono>
 
-// At the top of your file, add:
 constexpr float KEY_DELAY = 0.5f;
 
 Gate::Gate() {
     setType("gate");
 
-    // Start closed & idle.
+    // Start closed and idle
     setSprite("gate_closed_idle");
     state = GateState::CLOSED;
 
-    // Discover current anim info safely.
     auto* spr = getAnimation().getSprite();
     frameCount = spr ? spr->getFrameCount() : 1;
     lastFrame = frameCount - 1;
@@ -32,7 +30,7 @@ void Gate::startOpening() {
     state = GateState::OPENING;
     setSolidForState();
 
-    // Refresh cached info for this sprite.
+    // Refresh cached info for this sprite
 }
 
 void Gate::startClosing() {
@@ -44,9 +42,9 @@ void Gate::startClosing() {
 int Gate::eventHandler(const df::Event* e) {
     if (e->getType() == df::STEP_EVENT) {
         step();
-        // Decrement timer if active
+        // Decrease timer
         if (keyDelayTimer > 0.0f) {
-            keyDelayTimer -= 1.0f / 30.0f; // Assuming 30 FPS, adjust if needed
+            keyDelayTimer -= 1.0f / 30.0f;
             if (keyDelayTimer < 0.0f) keyDelayTimer = 0.0f;
         }
         return 1;
@@ -58,7 +56,7 @@ int Gate::eventHandler(const df::Event* e) {
         const bool isPress = (k->getKeyboardAction() == df::KEY_PRESSED) || (k->getKeyboardAction() == df::KEY_DOWN);
 
         if (isSpace && isPress && keyDelayTimer <=0.0f) {
-            // Only allow toggling when idle.
+            // Only allow toggling when idle
             keyDelayTimer = 0.5f;
             if (state == GateState::CLOSED) {
                 LM.writeLog("Gate: OPENING");
@@ -82,7 +80,7 @@ void Gate::step() {
     case GateState::OPENING:
         // Only switch to idle after the last frame has been displayed
         if (cur < lastFrame) {
-            // Animation still playing, do nothing
+            // Animation still playing
         } else {
             setSprite("gate_open_idle");
             state = GateState::OPEN;
@@ -96,7 +94,7 @@ void Gate::step() {
 
     case GateState::CLOSING:
         if (cur < lastFrame) {
-            // Animation still playing, do nothing
+            // Animation still playing
         } else {
             setSprite("gate_closed_idle");
             state = GateState::CLOSED;
@@ -110,7 +108,7 @@ void Gate::step() {
 
     case GateState::OPEN:
     case GateState::CLOSED:
-        // Idle: nothing to do.
+        // Idle: nothing to do
         break;
     }
 
@@ -118,9 +116,13 @@ void Gate::step() {
 }
 void Gate::setSolidForState() {
     switch (state) {
-    case GateState::CLOSED:   setSolidness(df::HARD);  break;
-    case GateState::OPEN:     setSolidness(df::SOFT);  break;
-    case GateState::OPENING:  setSolidness(df::SOFT);  break;
-    case GateState::CLOSING:  setSolidness(df::HARD);  break;
+    case GateState::CLOSED:
+    case GateState::CLOSING:
+        setSolidness(df::HARD);   // blocks
+        break;
+    case GateState::OPEN:
+    case GateState::OPENING:
+        setSolidness(df::SOFT);   // lets things pass
+        break;
     }
 }

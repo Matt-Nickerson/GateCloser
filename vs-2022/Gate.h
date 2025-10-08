@@ -14,7 +14,6 @@ public:
 private:
 	GateState state = GateState::CLOSED;
 
-	// Cached animation info for the *current* sprite
 	int frameCount = 1;
 	int lastFrame = 0;
 	int prevIndex = 0;
