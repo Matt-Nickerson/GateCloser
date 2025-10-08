@@ -1,6 +1,7 @@
 
 # Gate Closer
 Matthew Nickerson - Gate+Visitor Assets, Gate logic, Gate collision, Visitor Logic, resource loader functions, Scoring, Streaks, Lives
+
 Richard DeBlasio
 
 A tiny C++/Dragonfly ASCII game where you control three gates to manage the flow of GOOD, EVIL, and WIZARD visitors. Use timing to block the right ones, let the right ones through, and rack up points with a streak multiplier.
