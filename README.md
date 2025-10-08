@@ -1,6 +1,6 @@
 
 # Gate Closer
-Matthew Nickerson - Gate+Visitor Assets, Gate logic, Gate collision, Visitor Logic, resource loader functions, Scoring, Streaks, Lives
+Matthew Nickerson - Gate+Visitor Assets, Gate logic, Gate collision, Visitor Logic, wave ai logic, resource loader functions, Scoring, Streaks, Lives
 
 Richard DeBlasio
 
