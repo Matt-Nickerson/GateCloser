@@ -18,16 +18,19 @@ void loadResources() {
 	RM.loadSprite("sprites/wizard_visitor.txt", "wizard_visitor");
 }
 void spawnVisitors(Gate* gate, float laneY) {
-	auto* v1 = new Visitor(VisitorKind::GOOD, gate, "good_visitor", 0.30f);
-	auto* v2 = new Visitor(VisitorKind::EVIL, gate, "evil_visitor", 0.45f);
-	auto* v3 = new Visitor(VisitorKind::WIZARD, gate, "wizard_visitor", 0.65f);
+	// Create
+	auto* good = new Visitor(VisitorKind::GOOD, gate, "good_visitor", 0.30f);
+	auto* evil = new Visitor(VisitorKind::EVIL, gate, "evil_visitor", 0.45f);
+	auto* wizard = new Visitor(VisitorKind::WIZARD, gate, "wizard_visitor", 0.65f);
 
+	// Place inside the visible view, with small offsets so they don't overlap.
 	const df::Box& view = WM.getView();
-	float leftX = view.getCorner().getX() + 2;
+	const float leftX = view.getCorner().getX() + 2;
 
-	v1->setPosition({ leftX, laneY });
-	v2->setPosition({ leftX, laneY });
-	v3->setPosition({ leftX, laneY + 2 }); // slight stagger so can see them
+	// Same lane, staggered so they don't collide at spawn:
+	good->setPosition({ leftX + 0, laneY - 1 });
+	evil->setPosition({ leftX - 2, laneY + 0 });
+	wizard->setPosition({ leftX - 4, laneY + 1 });  // wizard can overlap safely, but still stagger
 }
 
 void clearVisitors() {
@@ -47,13 +50,13 @@ void createGates() {
 	float centerY = view.getCorner().getY() + view.getVertical() / 2.0f; 
 	float rowGap = 8.0f;                               
 
-	auto* gate1 = new Gate();
+	auto* gate1 = new Gate(false);
 	gate1->setPosition({ rightX, centerY - rowGap });
 
-	auto* gate2 = new Gate();
+	auto* gate2 = new Gate(true);
 	gate2->setPosition({ rightX, centerY });
 
-	auto* gate3 = new Gate();
+	auto* gate3 = new Gate(false);
 	gate3->setPosition({ rightX, centerY + rowGap });
 
 	// Spawn per-lane visitors aligned with the gates

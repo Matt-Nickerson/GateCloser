@@ -24,7 +24,7 @@ Visitor::Visitor(VisitorKind kind, Gate* gate, const std::string& sprite_label, 
 
 	setType("visitor");
 	setSprite(sprite_label);
-	setAltitude(1);
+	setAltitude(2);
 
 	// Movement to the right.
 	setVelocity(df::Vector(speed, 0));
@@ -33,7 +33,7 @@ Visitor::Visitor(VisitorKind kind, Gate* gate, const std::string& sprite_label, 
 		setSolidness(df::SOFT);
 	}
 	else {
-		setSolidness(df::HARD);
+		setSolidness(df::SOFT);
 	}
 
 	if (!m_gate) {
