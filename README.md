@@ -1,84 +1,65 @@
-##GATE CLOSER
+
+# Gate Closer
 Matthew Nickerson - Gate+Visitor Assets, Gate logic, Gate collision, Visitor Logic, resource loader functions, Scoring, Streaks, Lives
 Richard DeBlasio
 
 A tiny C++/Dragonfly ASCII game where you control three gates to manage the flow of GOOD, EVIL, and WIZARD visitors. Use timing to block the right ones, let the right ones through, and rack up points with a streak multiplier.
 
-Gameplay Overview:
+## Gameplay Overview
 
-There are 3 gates arranged vertically: Top, Middle, Bottom.
+- There are 3 gates arranged vertically: Top, Middle, Bottom.
+- You control them with a simple rule: **Middle open <-> Outside closed** (and vice-versa).
+- Visitors spawn on the left and move right toward the gates.
 
-You control them with a simple rule:
-Middle open ⇄ Outside closed (and vice-versa).
+### Visitor Rules
+- **GOOD** - should be let through when their gate is **OPEN**.
+- **EVIL** - should be **blocked** by a **CLOSED** gate (or **crushed** while it’s **CLOSING**).
+- **WIZARD** - ignores a **CLOSED** door; the only way to stop a wizard is to **shut the door on them** (while **CLOSING** and overlapping the doorway).
+- Breaking any rule costs a life (score system already wires in lives & multiplier).
 
-Visitors spawn on the left and move right toward the gates.
+## Controls
 
-Visitor Rules:
+- **SPACE** - Toggle the gate pattern (only when all gates are idle):
+  - If middle is **OPEN**, it starts **closing** and the outside gates start **opening**.
+  - If middle is **CLOSED**, it starts **opening** and the outside gates start **closing**.
 
-GOOD — should be let through when their gate is OPEN.
+## Scoring & Lives
 
-EVIL — should be blocked by a CLOSED gate (or crushed while it’s CLOSING).
+**Correct actions:**
+- GOOD let through -> **+100 × multiplier**
+- EVIL blocked/crushed -> **+100 × multiplier**
+- WIZARD crushed while door is **CLOSING** → **+150 × multiplier**
 
-WIZARD — ignores a CLOSED door; the only way to stop a wizard is to shut the door on them (while CLOSING and overlapping the doorway).
+**Wrong actions:**
+- Any rule violation -> **lose 1 life** and **reset multiplier**
 
-Breaking any rule costs a life (score system already wires in lives & multiplier).
+**Multiplier:**
+- Starts at **×1.0**; increases by **+0.5** per correct streak up to **×5.0**.
 
-Controls:
+**HUD (top of screen):**
+- **Score**, **Lives**, **Mult xN.N**
 
-SPACE — Toggle the gate pattern (only when all gates are idle):
+Everything above is handled by `ScoreSystem` and integrated via `Visitor::correct()` / `Visitor::wrong()`.
 
-If middle is OPEN, it starts closing and the outside gates start opening.
-
-If middle is CLOSED, it starts opening and the outside gates start closing.
-
-ESC — Quit (engine default, if enabled).
-
-Scoring & Lives:
-
-Correct actions:
-
-GOOD let through → +100 × multiplier
-
-EVIL blocked/crushed → +100 × multiplier
-
-WIZARD crushed while door is CLOSING → +150 × multiplier
-
-Wrong actions:
-
-Any rule violation → lose 1 life and reset multiplier
-
-Multiplier:
-
-Starts at ×1.0; increases by +0.5 per correct streak up to ×5.0.
-
-HUD (top of screen):
-
-Score, Lives, Mult xN.N
-
-Everything above is handled by ScoreSystem and integrated via Visitor::correct() / Visitor::wrong().
-
- Gate Logic (4-sprite animation)
+## Gate Logic (4-sprite animation)
 
 Each gate uses four sprites and lets the engine advance frames smoothly:
 
-gate_opening — opening animation (slowdown 1–2)
+- `gate_opening` - opening animation (slowdown 1-2)
+- `gate_closing` - closing animation (slowdown 1-2)
+- `gate_open_idle` - single-frame idle
+- `gate_closed_idle` - single-frame idle
 
-gate_closing — closing animation (slowdown 1–2)
-
-gate_open_idle — single-frame idle
-
-gate_closed_idle — single-frame idle
-
-Solidness by state:
-
-OPEN/OPENING → SOFT (no blocking)
-
-CLOSED/CLOSING → HARD (blocks/crushes)
+**Solidness by state:**
+- **OPEN/OPENING** -> `SOFT` (no blocking)
+- **CLOSED/CLOSING** -> `HARD` (blocks/crushes)
 
 This ensures collisions happen only when intended.
 
-Project Structure:
-/sprites
+## Project Structure
+
+```text
+sprites/
   door_opening.txt
   door_closing.txt
   door_open_idle.txt
@@ -87,25 +68,25 @@ Project Structure:
   evil_visitor.txt
   wizard_visitor.txt
 
-/src
-  Gate.h / Gate.cpp
-  Visitor.h / Visitor.cpp
-  GateController.h / GateController.cpp
-  ScoreSystem.h / ScoreSystem.cpp
+src/
+  Gate.h
+  Gate.cpp
+  Visitor.h
+  Visitor.cpp
+  GateController.h
+  GateController.cpp
+  ScoreSystem.h
+  ScoreSystem.cpp
   game.cpp
+```
 
-Build & Run:
+## Build & Run
 
-Requirements
+### Requirements
+- C++17
+- Dragonfly engine (course build)
+- Visual Studio 2022 (or your preferred toolchain)
 
-C++17
-
-Dragonfly engine (course build)
-
-Visual Studio 2022 (or your preferred toolchain)
-
-Setup
-
-Add Dragonfly include/lib paths to your project.
-
-Add all *.cpp and *.h files to your project.
+### Setup
+1. Add Dragonfly include/lib paths to your project.
+2. Add all `*.cpp` and `*.h` files to your project.
