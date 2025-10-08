@@ -30,6 +30,7 @@ Gate::Gate() {
 void Gate::startOpening() {
     setSprite("gate_opening");
     state = GateState::OPENING;
+    setSolidForState();
 
     // Refresh cached info for this sprite.
 }
@@ -37,6 +38,7 @@ void Gate::startOpening() {
 void Gate::startClosing() {
     setSprite("gate_closing");
     state = GateState::CLOSING;
+    setSolidForState();
 }
 
 int Gate::eventHandler(const df::Event* e) {
@@ -61,6 +63,7 @@ int Gate::eventHandler(const df::Event* e) {
             if (state == GateState::CLOSED) {
                 LM.writeLog("Gate: OPENING");
                 startOpening();
+
             }
             else if (state == GateState::OPEN) {
                 LM.writeLog("Gate: CLOSING");
@@ -87,6 +90,7 @@ void Gate::step() {
             frameCount = spr ? spr->getFrameCount() : 1;
             lastFrame = frameCount - 1;
             cur = getAnimation().getIndex();
+            setSolidForState();
         }
         break;
 
@@ -100,6 +104,7 @@ void Gate::step() {
             frameCount = spr ? spr->getFrameCount() : 1;
             lastFrame = frameCount - 1;
             cur = getAnimation().getIndex();
+            setSolidForState();
         }
         break;
 
@@ -110,4 +115,12 @@ void Gate::step() {
     }
 
     prevIndex = cur;
+}
+void Gate::setSolidForState() {
+    switch (state) {
+    case GateState::CLOSED:   setSolidness(df::HARD);  break;
+    case GateState::OPEN:     setSolidness(df::SOFT);  break;
+    case GateState::OPENING:  setSolidness(df::SOFT);  break;
+    case GateState::CLOSING:  setSolidness(df::HARD);  break;
+    }
 }
