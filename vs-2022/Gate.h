@@ -7,6 +7,9 @@ class Gate : public df::Object {
 public:
 	Gate();
 	int eventHandler(const df::Event* e) override;
+	GateState getState() const { return state; }
+	df::Box getDoorBox() const { return getBox(); }
+
 
 private:
 	GateState state = GateState::CLOSED;
@@ -20,4 +23,5 @@ private:
 	void step();
 	void startOpening();
 	void startClosing();
+	void setSolidForState();
 };

@@ -1,0 +1,30 @@
+<HEADER>
+frames 3
+width 3
+height 5
+color green
+slowdown 4
+</HEADER>
+<BODY>
+\|/
+ X 
+\|/
+ | 
+/ \
+end
+\|/
+ X 
+-|-
+ | 
+/ \
+end
+\|/
+ X 
+/|\
+ | 
+/ \
+end
+</BODY>
+<FOOTER>
+version 1
+</FOOTER>

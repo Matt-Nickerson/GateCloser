@@ -10,6 +10,9 @@ void loadResources() {
 	RM.loadSprite("sprites/door_close.txt", "gate_close_anim"); 
 	RM.loadSprite("sprites/door_open_idle.txt", "gate_open_idle");
 	RM.loadSprite("sprites/door_closed_idle.txt", "gate_closed_idle");
+	RM.loadSprite("sprites/good_visitor.txt", "good_visitor");
+	RM.loadSprite("sprites/evil_visitor.txt", "evil_visitor");
+	RM.loadSprite("sprites/wizard_visitor.txt", "wizard_visitor");
 }
 
 int main(int, char**) {

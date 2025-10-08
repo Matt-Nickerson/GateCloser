@@ -7,7 +7,7 @@
 #include <chrono>
 
 // At the top of your file, add:
-constexpr float KEY_DELAY = 1.5f;
+constexpr float KEY_DELAY = 0.5f;
 
 Gate::Gate() {
     setType("gate");
@@ -30,22 +30,15 @@ Gate::Gate() {
 void Gate::startOpening() {
     setSprite("gate_opening");
     state = GateState::OPENING;
+    setSolidForState();
 
     // Refresh cached info for this sprite.
-    auto* spr = getAnimation().getSprite();
-    frameCount = spr ? spr->getFrameCount() : 1;
-    lastFrame = frameCount - 1;
-    prevIndex = getAnimation().getIndex();
 }
 
 void Gate::startClosing() {
     setSprite("gate_closing");
     state = GateState::CLOSING;
-
-    auto* spr = getAnimation().getSprite();
-    frameCount = spr ? spr->getFrameCount() : 1;
-    lastFrame = frameCount - 1;
-    prevIndex = getAnimation().getIndex();
+    setSolidForState();
 }
 
 int Gate::eventHandler(const df::Event* e) {
@@ -66,9 +59,11 @@ int Gate::eventHandler(const df::Event* e) {
 
         if (isSpace && isPress && keyDelayTimer <=0.0f) {
             // Only allow toggling when idle.
+            keyDelayTimer = 0.5f;
             if (state == GateState::CLOSED) {
                 LM.writeLog("Gate: OPENING");
                 startOpening();
+
             }
             else if (state == GateState::OPEN) {
                 LM.writeLog("Gate: CLOSING");
@@ -81,31 +76,35 @@ int Gate::eventHandler(const df::Event* e) {
 }
 
 void Gate::step() {
-    // Let the engine advance frames; we just watch for completion.
     int cur = getAnimation().getIndex();
 
     switch (state) {
     case GateState::OPENING:
-        // Finish when we reach the last frame OR detect wrap-around (in case it loops).
-        if (cur >= lastFrame || cur < prevIndex) {
+        // Only switch to idle after the last frame has been displayed
+        if (cur < lastFrame) {
+            // Animation still playing, do nothing
+        } else {
             setSprite("gate_open_idle");
             state = GateState::OPEN;
-            // Re-cache for idle (usually 1 frame).
             auto* spr = getAnimation().getSprite();
             frameCount = spr ? spr->getFrameCount() : 1;
             lastFrame = frameCount - 1;
             cur = getAnimation().getIndex();
+            setSolidForState();
         }
         break;
 
     case GateState::CLOSING:
-        if (cur >= lastFrame || cur < prevIndex) {
+        if (cur < lastFrame) {
+            // Animation still playing, do nothing
+        } else {
             setSprite("gate_closed_idle");
             state = GateState::CLOSED;
             auto* spr = getAnimation().getSprite();
             frameCount = spr ? spr->getFrameCount() : 1;
             lastFrame = frameCount - 1;
             cur = getAnimation().getIndex();
+            setSolidForState();
         }
         break;
 
@@ -116,4 +115,12 @@ void Gate::step() {
     }
 
     prevIndex = cur;
+}
+void Gate::setSolidForState() {
+    switch (state) {
+    case GateState::CLOSED:   setSolidness(df::HARD);  break;
+    case GateState::OPEN:     setSolidness(df::SOFT);  break;
+    case GateState::OPENING:  setSolidness(df::SOFT);  break;
+    case GateState::CLOSING:  setSolidness(df::HARD);  break;
+    }
 }
