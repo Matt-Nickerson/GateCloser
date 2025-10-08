@@ -118,9 +118,13 @@ void Gate::step() {
 }
 void Gate::setSolidForState() {
     switch (state) {
-    case GateState::CLOSED:   setSolidness(df::HARD);  break;
-    case GateState::OPEN:     setSolidness(df::SOFT);  break;
-    case GateState::OPENING:  setSolidness(df::SOFT);  break;
-    case GateState::CLOSING:  setSolidness(df::HARD);  break;
+    case GateState::CLOSED:
+    case GateState::CLOSING:
+        setSolidness(df::HARD);   // blocks / can crush
+        break;
+    case GateState::OPEN:
+    case GateState::OPENING:
+        setSolidness(df::SOFT);   // lets things pass, no collision
+        break;
     }
 }

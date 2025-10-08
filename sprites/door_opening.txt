@@ -3,7 +3,7 @@ frames 6
 width 9
 height 5
 color green
-slowdown 1
+slowdown 10
 </HEADER>
 <BODY>
 #########
