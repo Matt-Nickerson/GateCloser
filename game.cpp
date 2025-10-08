@@ -6,11 +6,10 @@
 #include "vs-2022/Gate.h"
 
 void loadResources() {
-    if (RM.loadSprite("sprites/door.txt", "gate")) {
-        LM.writeLog("Failed to load gates.txt");
-        GM.shutDown();
-        exit(1);
-	}
+	RM.loadSprite("sprites/door_open.txt", "gate_open_anim");
+	RM.loadSprite("sprites/door_close.txt", "gate_close_anim"); 
+	RM.loadSprite("sprites/door_open_idle.txt", "gate_open_idle");
+	RM.loadSprite("sprites/door_closed_idle.txt", "gate_closed_idle");
 }
 
 int main(int, char**) {
