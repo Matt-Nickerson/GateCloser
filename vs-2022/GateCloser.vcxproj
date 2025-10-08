@@ -89,11 +89,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Gate.h" />
   </ItemGroup>
   <ItemGroup>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\game.cpp" />
+    <ClCompile Include="Gate.cpp" />
   </ItemGroup>
   <ItemGroup>
   </ItemGroup>

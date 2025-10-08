@@ -1,28 +1,30 @@
-//
-// game.cpp
-// 
-
-// Engine includes.
 #include "GameManager.h"
 #include "LogManager.h"
+#include "WorldManager.h"
+#include "ResourceManager.h"
+#include "EventKeyboard.h"
+#include "vs-2022/Gate.h"
 
-int main(int argc, char *argv[]) {
+void loadResources() {
+	RM.loadSprite("sprites/door_open.txt", "gate_open_anim");
+	RM.loadSprite("sprites/door_close.txt", "gate_close_anim"); 
+	RM.loadSprite("sprites/door_open_idle.txt", "gate_open_idle");
+	RM.loadSprite("sprites/door_closed_idle.txt", "gate_closed_idle");
+}
 
-  // Start up game manager.
-  if (GM.startUp())  {
-    LM.writeLog("Error starting game manager!");
-    GM.shutDown();
-    return 1;
-  }
-
-  // Set flush of logfile during development (when done, make false).
+int main(int, char**) {
+  if (GM.startUp()) { LM.writeLog("GM startUp failed"); GM.shutDown(); return 1; }
   LM.setFlush(true);
 
-  // Show splash screen.
-  df::splash();
+  loadResources(); // <-- must happen before creating Gate
 
-  // Shut everything down.
+  Gate* gate = new Gate();
+  const df::Box& bounds = WM.getBoundary();
+  df::Vector center(bounds.getHorizontal() / 2.0f, bounds.getVertical() / 2.0f);
+  gate->setPosition(center);
+
+  LM.writeLog("Press SPACE to toggle gate.");
+  GM.run();
   GM.shutDown();
   return 0;
 }
-
