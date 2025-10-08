@@ -7,6 +7,7 @@
 #include "vs-2022/Visitor.h"
 #include <iostream>
 #include "ObjectList.h"
+#include "vs-2022/ScoreSystem.h"
 
 void loadResources() {
 	RM.loadSprite("sprites/door_opening.txt", "gate_opening");
@@ -74,6 +75,7 @@ int main(int, char**) {
   LM.setFlush(true);
 
   loadResources();
+  ScoreSystem::get().init(3);
   populateWorld();
 
   LM.writeLog("Press SPACE to toggle gate.");

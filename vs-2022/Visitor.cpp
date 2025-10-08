@@ -3,6 +3,7 @@
 #include "ResourceManager.h"
 #include "Gate.h"
 #include "EventStep.h"
+#include "ScoreSystem.h"
 
 static bool boxOverlap(const df::Box& a, const df::Box& b) {
 
@@ -154,7 +155,19 @@ void Visitor::onCollision(const df::EventCollision* c) {
 }
 void Visitor::correct(const char* msg) {
 	LM.writeLog("OK", msg);
+	switch (m_kind) {
+	case VisitorKind::GOOD:
+		ScoreSystem::get().goodLetThrough();
+		break;
+	case VisitorKind::EVIL:
+		ScoreSystem::get().evilBlocked();
+		break;
+	case VisitorKind::WIZARD:
+		ScoreSystem::get().wizardCrushed();
+		break;
+	}
 }
 void Visitor::wrong(const char* msg) {
 	LM.writeLog("Lose a life", msg);
+	ScoreSystem::get().wrongAction(msg);
 }
