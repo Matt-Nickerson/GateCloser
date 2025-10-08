@@ -1,11 +1,9 @@
-// TrioSpawner.cpp
 #include "TrioSpawner.h"
 #include "GameManager.h"
 #include "WorldManager.h"
 #include "EventStep.h"
 #include "ScoreSystem.h"
 
-// Your existing function signature: spawnVisitors(Gate* gate, float speed)
 extern void spawnVisitors(Gate* gate, float speed);
 
 TrioSpawner::TrioSpawner(Gate* g1, Gate* g2, Gate* g3, int interval_ms)

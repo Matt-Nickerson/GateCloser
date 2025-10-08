@@ -35,8 +35,8 @@ private:
 
 	// helpers
 	void addPoints(int base);
-	void onCorrect();           // updates streak & multiplier
-	void onWrong();             // reset streak/mult, lose life
+	void onCorrect(); // updates streak & multiplier
+	void onWrong();   // reset streak/mult, lose life
 	void updateHud();
 	void ensureHud();
 };
