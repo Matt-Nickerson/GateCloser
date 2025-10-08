@@ -27,7 +27,7 @@ Visitor::Visitor(VisitorKind kind, Gate* gate, const std::string& sprite_label, 
 	setSprite(sprite_label);
 	setAltitude(2);
 
-	// Movement to the right.
+	// Movement to the right
 	setVelocity(df::Vector(speed, 0));
 
 	if (m_kind == VisitorKind::WIZARD) {

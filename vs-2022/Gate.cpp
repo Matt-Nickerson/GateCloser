@@ -35,7 +35,6 @@ void Gate::startOpening() {
     state = GateState::OPENING;
     setSolidForState();
 
-    // Refresh cached info for this sprite
 }
 
 void Gate::startClosing() {
@@ -123,11 +122,11 @@ void Gate::setSolidForState() {
     switch (state) {
     case GateState::CLOSED:
     case GateState::CLOSING:
-        setSolidness(df::HARD);   // blocks
+        setSolidness(df::HARD); // blocks
         break;
     case GateState::OPEN:
     case GateState::OPENING:
-        setSolidness(df::SOFT);   // lets things pass
+        setSolidness(df::SOFT);// lets things pass
         break;
     }
 }
