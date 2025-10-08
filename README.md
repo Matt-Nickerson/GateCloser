@@ -1,41 +1,111 @@
-# Saucer Shoot
+##GATE CLOSER
+Matthew Nickerson - Gate+Visitor Assets, Gate logic, Gate collision, Visitor Logic, resource loader functions, Scoring, Streaks, Lives
+Richard DeBlasio
 
-Mark Claypool (WPI)  
-2016-2025
+A tiny C++/Dragonfly ASCII game where you control three gates to manage the flow of GOOD, EVIL, and WIZARD visitors. Use timing to block the right ones, let the right ones through, and rack up points with a streak multiplier.
 
-Saucer Shoot game from Dragonfly tutorial.
+Gameplay Overview:
 
-Tutorial available online:
+There are 3 gates arranged vertically: Top, Middle, Bottom.
 
-<http://dragonfly.wpi.edu/tutorial/index.html>
+You control them with a simple rule:
+Middle open ⇄ Outside closed (and vice-versa).
 
-And in book:
+Visitors spawn on the left and move right toward the gates.
 
-    Mark Claypool. Dragonfly - Program a Game Engine from Scratch,
-    Interactive Media and Game Development, Worcester Polytechnic
-    Institute, 2014. Online at: <http://dragonfly.wpi.edu/book/>
+Visitor Rules:
 
---------------------------------------------------------------------
+GOOD — should be let through when their gate is OPEN.
 
-To build:
+EVIL — should be blocked by a CLOSED gate (or crushed while it’s CLOSING).
 
-0) Setup development environment for Windows, Linux or MacOS.  See <http://dragonfly.wpi.edu/engine/index.html#setup> for details.
+WIZARD — ignores a CLOSED door; the only way to stop a wizard is to shut the door on them (while CLOSING and overlapping the doorway).
 
-1) Build, as appropriate for the platform (e.g., "make" on Linux or Mac, F7 on Windows from Visual Studio).
+Breaking any rule costs a life (score system already wires in lives & multiplier).
 
-2) Run game, as appropriate for the platform (e.g., "./game" on Linux or Mac, F5 on Windows from Visual Studio)
+Controls:
 
---------------------------------------------------------------------
+SPACE — Toggle the gate pattern (only when all gates are idle):
 
-Directories:
+If middle is OPEN, it starts closing and the outside gates start opening.
 
---------   ---------------------------------------------------------
-sounds/    contains the sound files used in Saucer shoot
-sprites/   contains the sprite files used in Saucer shoot
-vs-2022/   contains MS Visual Studio solution files (see README.md)
---------   ---------------------------------------------------------
+If middle is CLOSED, it starts opening and the outside gates start closing.
 
-Happy shooting!
+ESC — Quit (engine default, if enabled).
 
--- Mark
-claypool@cs.wpi.edu
+Scoring & Lives:
+
+Correct actions:
+
+GOOD let through → +100 × multiplier
+
+EVIL blocked/crushed → +100 × multiplier
+
+WIZARD crushed while door is CLOSING → +150 × multiplier
+
+Wrong actions:
+
+Any rule violation → lose 1 life and reset multiplier
+
+Multiplier:
+
+Starts at ×1.0; increases by +0.5 per correct streak up to ×5.0.
+
+HUD (top of screen):
+
+Score, Lives, Mult xN.N
+
+Everything above is handled by ScoreSystem and integrated via Visitor::correct() / Visitor::wrong().
+
+ Gate Logic (4-sprite animation)
+
+Each gate uses four sprites and lets the engine advance frames smoothly:
+
+gate_opening — opening animation (slowdown 1–2)
+
+gate_closing — closing animation (slowdown 1–2)
+
+gate_open_idle — single-frame idle
+
+gate_closed_idle — single-frame idle
+
+Solidness by state:
+
+OPEN/OPENING → SOFT (no blocking)
+
+CLOSED/CLOSING → HARD (blocks/crushes)
+
+This ensures collisions happen only when intended.
+
+Project Structure:
+/sprites
+  door_opening.txt
+  door_closing.txt
+  door_open_idle.txt
+  door_closed_idle.txt
+  good_visitor.txt
+  evil_visitor.txt
+  wizard_visitor.txt
+
+/src
+  Gate.h / Gate.cpp
+  Visitor.h / Visitor.cpp
+  GateController.h / GateController.cpp
+  ScoreSystem.h / ScoreSystem.cpp
+  game.cpp
+
+Build & Run:
+
+Requirements
+
+C++17
+
+Dragonfly engine (course build)
+
+Visual Studio 2022 (or your preferred toolchain)
+
+Setup
+
+Add Dragonfly include/lib paths to your project.
+
+Add all *.cpp and *.h files to your project.
