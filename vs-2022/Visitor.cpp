@@ -88,7 +88,6 @@ void Visitor::onStep() {
 
 	m_prev_gate_state = gate_state;
 
-	// “Let through” check: crossed the goal line (right side of gate/world).
 	if (getPosition().getX() >= m_goal_x) {
 		if (m_kind == VisitorKind::GOOD) {
 			correct("Good let through (correct).");
@@ -114,10 +113,10 @@ void Visitor::onCollision(const df::EventCollision* c) {
 
 	GateState gate_state = m_gate->getState();
 
-	// Wizard: ignore CLOSED/OPENING/OPEN collisions (shouldn’t collide if SPECTRAL).
+	// Wizard: ignore CLOSED/OPENING/OPEN collisions
 	if (m_kind == VisitorKind::WIZARD) {
 		if (gate_state == GateState::CLOSING && overlapsGate()) {
-			// Edge case: collision while closing (treat as crush).
+			// Edge case: collision while closing (treat as crush)
 			correct("Wizard crushed by closing door (correct).");
 			WM.markForDelete(this);
 		}
@@ -137,7 +136,7 @@ void Visitor::onCollision(const df::EventCollision* c) {
 		break;
 
 	case GateState::CLOSING:
-		// Door shut on them.
+		// Door shut on them
 		if (m_kind == VisitorKind::GOOD) {
 			wrong("Door shut on GOOD (wrong).");
 		}
@@ -149,7 +148,7 @@ void Visitor::onCollision(const df::EventCollision* c) {
 
 	case GateState::OPEN:
 	case GateState::OPENING:
-		// Shouldn't collide if gate is SOFT; do nothing.
+		// Shouldn't collide if gate is SOFT
 		break;
 	}
 }

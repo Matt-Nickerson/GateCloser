@@ -27,11 +27,11 @@ void spawnVisitors(Gate* gate, float laneY) {
 
 	v1->setPosition({ leftX, laneY });
 	v2->setPosition({ leftX, laneY });
-	v3->setPosition({ leftX, laneY + 2 }); // slight stagger so you can see them
+	v3->setPosition({ leftX, laneY + 2 }); // slight stagger so can see them
 }
 
 void clearVisitors() {
-	// Mark all visitors for deletion.
+	// Mark all visitors for deletion
 	auto list = WM.getAllObjects(true);
 	for (int i = 0; i < list.getCount(); ++i) {
 		auto* obj = list[i];
@@ -56,7 +56,7 @@ void createGates() {
 	auto* gate3 = new Gate();
 	gate3->setPosition({ rightX, centerY + rowGap });
 
-	// Spawn per-lane visitors aligned with the gates.
+	// Spawn per-lane visitors aligned with the gates
 	spawnVisitors(gate1, centerY - rowGap);
 	spawnVisitors(gate2, centerY);
 	spawnVisitors(gate3, centerY + rowGap);
@@ -70,7 +70,7 @@ int main(int, char**) {
   if (GM.startUp()) { LM.writeLog("GM startUp failed"); GM.shutDown(); return 1; }
   LM.setFlush(true);
 
-  loadResources(); // <-- must happen before creating Gate
+  loadResources();
   populateWorld();
 
   LM.writeLog("Press SPACE to toggle gate.");
