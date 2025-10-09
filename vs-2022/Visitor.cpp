@@ -53,7 +53,7 @@ Visitor::Visitor(VisitorKind kind, Gate* gate, float speed) :m_kind(kind), m_gat
 
 	//Set Position.
 	const df::Box& view = WM.getView();
-	const float leftX = view.getCorner().getX() + 2;
+	const float leftX = view.getCorner().getX() - 15;
 	setPosition(df::Vector(leftX, gate->getPosition().getY()));
 
 	if (m_kind == VisitorKind::WIZARD) {
