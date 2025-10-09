@@ -5,7 +5,7 @@ enum class GateState { CLOSED, OPENING, OPEN, CLOSING };
 
 class Gate : public df::Object {
 public:
-	Gate(bool isOpen);
+	Gate(bool isOpen, df::Vector position);
 	int eventHandler(const df::Event* e) override;
 	GateState getState() const { return state; }
 	df::Box getDoorBox() const { return getBox(); }
