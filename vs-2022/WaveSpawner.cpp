@@ -21,7 +21,7 @@ WaveSpawner::WaveSpawner(Gate* g1, Gate* g2, Gate* g3){
 	registerInterest(df::STEP_EVENT);
 
 	//Initalize Variables.
-	initialWaveCooldown = 60;
+	initialWaveCooldown = 55;
 	currentWaveCooldown = 0;
 }
 
