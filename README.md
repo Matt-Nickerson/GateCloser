@@ -1,6 +1,6 @@
 
 # GATECLOSER
-Matthew Nickerson (mwnickerson@wpi.edu) - Gate + Visitor Assets, Gate logic, Gate collision, Visitor Logic, resource loader functions, Scoring, Streaks, Lives
+Matthew Nickerson (mwnickerson@wpi.edu) - Gate + Visitor Assets, Gate logic, Gate collision, Visitor Logic, first version Wave Spawning resource loader functions, Scoring, Streaks, Lives
 
 Richard DeBlasio (rcdeblasio@wpi.edu) - Advanced Wave Spawning, and Bug Fixes.
 
