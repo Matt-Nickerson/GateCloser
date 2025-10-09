@@ -21,13 +21,29 @@ static bool boxOverlap(const df::Box& a, const df::Box& b) {
 	return !(aR < bL || aL > bR || aB < bT || aT > bB);
 }
 
-Visitor::Visitor(VisitorKind kind, Gate* gate, const std::string& sprite_label, float speed) : m_kind(kind), m_gate(gate) {
+void Visitor::determineSprite(void){
+
+	switch (m_kind)
+	{
+		case VisitorKind::GOOD:
+			setSprite("good_visitor");
+			break;
+		case VisitorKind::EVIL:
+			setSprite("evil_visitor");
+			break;
+		case VisitorKind::WIZARD:
+			setSprite("wizard_visitor");
+			break;
+	};
+}
+
+Visitor::Visitor(VisitorKind kind, Gate* gate, float speed) :m_kind(kind), m_gate(gate) {
 
 	//Set Type.
 	setType("visitor");
 	
 	//Set Sprite.
-	setSprite(sprite_label);
+	determineSprite();
 
 	//Set Altitude.
 	setAltitude(2);
@@ -35,6 +51,10 @@ Visitor::Visitor(VisitorKind kind, Gate* gate, const std::string& sprite_label, 
 	// Movement to the Right.
 	setVelocity(df::Vector(speed, 0));
 
+	//Set Position.
+	const df::Box& view = WM.getView();
+	const float leftX = view.getCorner().getX() + 2;
+	setPosition(df::Vector(leftX, gate->getPosition().getY()));
 
 	if (m_kind == VisitorKind::WIZARD) {
 		setSolidness(df::SOFT);

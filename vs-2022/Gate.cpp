@@ -6,16 +6,21 @@
 #include "LogManager.h"
 #include <chrono>
 
-Gate::Gate(bool isOpen) {
+Gate::Gate(bool isOpen, df::Vector position) {
+
+    //Set Type.
     setType("gate");
 
-    // Start closed and idle
-    setSprite("gate_closed_idle");
+    //Set Position
+    setPosition(position);
+
     if (isOpen) {
         state = GateState::OPEN;
+        setSprite("gate_open_idle");
     }
     else {
         state = GateState::CLOSED;
+        setSprite("gate_closed_idle");
     }
 
     auto* spr = getAnimation().getSprite();
@@ -57,9 +62,11 @@ int Gate::eventHandler(const df::Event* e) {
         const bool isSpace = (k->getKey() == df::Keyboard::SPACE) || (k->getKey() == ' ');
         const bool isPress = (k->getKeyboardAction() == df::KEY_PRESSED);
 
-        if (isSpace && isPress && keyDelayTimer <=0.0f) {
+        if (isSpace && isPress && keyDelayTimer <= 0.0f) {
+
             // Only allow toggling when idle
             keyDelayTimer = 0.1f;
+
             if (state == GateState::CLOSED) {
                 LM.writeLog("Gate: OPENING");
                 startOpening();

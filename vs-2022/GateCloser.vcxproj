@@ -91,8 +91,9 @@
   <ItemGroup>
     <ClInclude Include="Gate.h" />
     <ClInclude Include="ScoreSystem.h" />
-    <ClInclude Include="TrioSpawner.h" />
     <ClInclude Include="Visitor.h" />
+    <ClInclude Include="Wave.h" />
+    <ClInclude Include="WaveSpawner.h" />
   </ItemGroup>
   <ItemGroup>
   </ItemGroup>
@@ -100,8 +101,9 @@
     <ClCompile Include="..\game.cpp" />
     <ClCompile Include="Gate.cpp" />
     <ClCompile Include="ScoreSystem.cpp" />
-    <ClCompile Include="TrioSpawner.cpp" />
     <ClCompile Include="Visitor.cpp" />
+    <ClCompile Include="Wave.cpp" />
+    <ClCompile Include="WaveSpawner.cpp" />
   </ItemGroup>
   <ItemGroup>
   </ItemGroup>
