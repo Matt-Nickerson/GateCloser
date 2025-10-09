@@ -68,9 +68,8 @@ void spawnVisitors(Gate* gate, float /*unused*/) {
 	const df::Box& view = WM.getView();
 	const float centerY = view.getCorner().getY() + view.getVertical() / 2.0f;	
 	const float gateY = gate->getPosition().getY();
-	const bool isMiddle = (std::fabs(gateY - centerY) < 0.5f); // small tolerance
+	const bool isMiddle = (std::fabs(gateY - centerY) < 0.5f); 
 
-	// Choose type: never spawn GOOD in middle lane.
 	VisitorKind kind;
 	if (isMiddle) {
 		kind = (rand() % 2 == 0) ? VisitorKind::EVIL : VisitorKind::WIZARD;
@@ -92,9 +91,8 @@ void spawnVisitors(Gate* gate, float /*unused*/) {
 	}
 	Visitor* v = new Visitor(kind, gate, label, speed);
 
-	// Position: left edge of the visible view, on the EXACT same Y as the gate.
 	const float leftX = view.getCorner().getX() + 2;
-	const float jitterX = -2.0f * (rand() % 3); // {0, -2, -4} to reduce stacking
+	const float jitterX = -2.0f * (rand() % 3); 
 	v->setPosition(df::Vector(leftX + jitterX, gateY));
 }
 
