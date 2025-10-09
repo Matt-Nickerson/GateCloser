@@ -42,6 +42,16 @@ A tiny C++/Dragonfly ASCII game where you control three gates to manage the flow
 
 Everything above is handled by `ScoreSystem` and integrated via `Visitor::correct()` / `Visitor::wrong()`.
 
+## Wave Spawning
+
+Waves are spawned in intervals with ONLY Valid Combinations for the Gate to Interact with!
+
+Waves are encouraged to spawn smaller visitor waves over ones of bigger sizes. 
+
+Wizard waves are all spawned in this combination to mix up gameplay.
+
+Every run of GateCrusher is different from the last!
+
 ## Gate Logic (4-sprite animation)
 
 Each gate uses four sprites and lets the engine advance frames smoothly:
@@ -78,6 +88,10 @@ src/
   GateController.cpp
   ScoreSystem.h
   ScoreSystem.cpp
+  Wave.h
+  Wave.cpp
+  WaveSpawner.cpp
+  WaveSpawner.h
   game.cpp
 ```
 
