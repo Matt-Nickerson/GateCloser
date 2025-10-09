@@ -1,5 +1,5 @@
 
-# Gate Closer
+# GATECLOSER
 Matthew Nickerson - Gate + Visitor Assets, Gate logic, Gate collision, Visitor Logic, resource loader functions, Scoring, Streaks, Lives
 
 Richard DeBlasio - Advanced Wave Spawning, and Bug Fixes.
@@ -50,7 +50,7 @@ Waves are encouraged to spawn smaller visitor waves over ones of bigger sizes.
 
 Wizard waves are all spawned in this combination to mix up gameplay.
 
-Every run of GateCrusher is different from the last!
+Every run of GATECLOSER is different from the last!
 
 ## Gate Logic (4-sprite animation)
 
