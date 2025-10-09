@@ -11,7 +11,48 @@
 #include "math.h";
 #include "vs-2022/TrioSpawner.h"
 
-void loadResources() {
+
+void loadResources(void);
+void populateWorld(void);
+void spawnWaves(void);
+
+int main(int, char**) {
+
+	//Start up game manager.
+	if (GM.startUp()) { 
+		LM.writeLog("GM startUp failed"); 
+		GM.shutDown(); 
+		return 1; 
+	}
+
+	//Set flush of logfile during development(when done, make false).
+	LM.setFlush(true);
+
+	//Load Game Resources.
+	loadResources();
+
+	//Start Wave Spawning.
+	spawnWaves();
+
+	//Populate Game World with some objects.
+	populateWorld();
+
+	//Run Game until game loop is over.
+	GM.run();
+
+	//Shut Everything Down.
+	GM.shutDown();
+	return 0;
+}
+
+void populateWorld(void) {
+
+	//Set Starting Lives.
+	ScoreSystem::get().init(3);
+}
+
+
+void loadResources(void) {
 	RM.loadSprite("sprites/door_opening.txt", "gate_opening");
 	RM.loadSprite("sprites/door_closing.txt", "gate_closing"); 
 	RM.loadSprite("sprites/door_open_idle.txt", "gate_open_idle");
@@ -20,6 +61,8 @@ void loadResources() {
 	RM.loadSprite("sprites/evil_visitor.txt", "evil_visitor");
 	RM.loadSprite("sprites/wizard_visitor.txt", "wizard_visitor");
 }
+
+
 void spawnVisitors(Gate* gate, float /*unused*/) {
 	// Decide if this gate is the middle lane (same Y as view center).
 	const df::Box& view = WM.getView();
@@ -43,9 +86,9 @@ void spawnVisitors(Gate* gate, float /*unused*/) {
 	const char* label = nullptr;
 	float speed = 0.35f;
 	switch (kind) {
-	case VisitorKind::GOOD:   label = "good_visitor";   speed = 0.33f; break;
-	case VisitorKind::EVIL:   label = "evil_visitor";   speed = 0.34f; break;
-	case VisitorKind::WIZARD: label = "wizard_visitor"; speed = 0.40f; break;
+	case VisitorKind::GOOD:   label = "good_visitor";   speed = 0.35f; break;
+	case VisitorKind::EVIL:   label = "evil_visitor";   speed = 0.35f; break;
+	case VisitorKind::WIZARD: label = "wizard_visitor"; speed = 0.35f; break;
 	}
 	Visitor* v = new Visitor(kind, gate, label, speed);
 
@@ -87,10 +130,6 @@ void createGates() {
 	spawnVisitors(gate3, centerY + rowGap);
 }
 
-void populateWorld() {
-	createGates();
-}
-
 void spawnWaves() {
 	const df::Box& view = WM.getView();
 	float rightX = view.getCorner().getX() + view.getHorizontal() - 12;
@@ -103,18 +142,4 @@ void spawnWaves() {
 
 	// Create a spawner that fires every 4000 ms
 	new TrioSpawner(gate1, gate2, gate3, 4000);
-}
-
-
-int main(int, char**) {
-  if (GM.startUp()) { LM.writeLog("GM startUp failed"); GM.shutDown(); return 1; }
-  LM.setFlush(true);
-
-  loadResources();
-  ScoreSystem::get().init(3);
-  spawnWaves();
-  LM.writeLog("Press SPACE to toggle gate.");
-  GM.run();
-  GM.shutDown();
-  return 0;
 }

@@ -23,12 +23,18 @@ static bool boxOverlap(const df::Box& a, const df::Box& b) {
 
 Visitor::Visitor(VisitorKind kind, Gate* gate, const std::string& sprite_label, float speed) : m_kind(kind), m_gate(gate) {
 
+	//Set Type.
 	setType("visitor");
+	
+	//Set Sprite.
 	setSprite(sprite_label);
+
+	//Set Altitude.
 	setAltitude(2);
 
-	// Movement to the right.
+	// Movement to the Right.
 	setVelocity(df::Vector(speed, 0));
+
 
 	if (m_kind == VisitorKind::WIZARD) {
 		setSolidness(df::SOFT);
@@ -49,19 +55,22 @@ Visitor::Visitor(VisitorKind kind, Gate* gate, const std::string& sprite_label, 
 }
 
 int Visitor::eventHandler(const df::Event* e) {
+
+	//Step Event.
 	if (e->getType() == df::STEP_EVENT) {
 		onStep();
 		return 1;
 	}
+
+	//Collision Event.
 	if (e->getType() == df::COLLISION_EVENT) {
 		auto* c = static_cast<const df::EventCollision*>(e);
 		onCollision(c);
 		return 1;
 	}
+
 	return 0;
 }
-
-
 bool Visitor::overlapsGate() const {
 	if (!m_gate) return false;
 	return boxOverlap(getBox(), m_gate->getDoorBox());
@@ -71,13 +80,14 @@ void Visitor::onStep() {
 	if (!m_gate) {
 		return;
 	}
+
 	GateState gate_state = m_gate->getState();
 	if ((m_prev_gate_state != GateState::CLOSING) && (gate_state == GateState::CLOSING) && overlapsGate()) {
 		if (m_kind == VisitorKind::WIZARD) {
 			correct("Wizard crushed by closing door (correct stop).");
 		}
 		else if (m_kind == VisitorKind::EVIL) {
-			correct("Evil crushed by closing door (also acceptable).");
+			wrong("Closed door on Bad visiitor (wrong)");
 		}
 		else { // GOOD
 			wrong("Closed door on GOOD visitor (wrong).");
@@ -142,7 +152,7 @@ void Visitor::onCollision(const df::EventCollision* c) {
 			wrong("Door shut on GOOD (wrong).");
 		}
 		else { // EVIL
-			correct("Door shut on EVIL (correct).");
+			wrong("Door shut on EVIL (wrong).");
 		}
 		WM.markForDelete(this);
 		break;

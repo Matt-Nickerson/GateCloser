@@ -6,8 +6,6 @@
 #include "LogManager.h"
 #include <chrono>
 
-constexpr float KEY_DELAY = 0.5f;
-
 Gate::Gate(bool isOpen) {
     setType("gate");
 
@@ -58,11 +56,11 @@ int Gate::eventHandler(const df::Event* e) {
     if (e->getType() == df::KEYBOARD_EVENT) {
         auto* k = static_cast<const df::EventKeyboard*>(e);
         const bool isSpace = (k->getKey() == df::Keyboard::SPACE) || (k->getKey() == ' ');
-        const bool isPress = (k->getKeyboardAction() == df::KEY_PRESSED) || (k->getKeyboardAction() == df::KEY_DOWN);
+        const bool isPress = (k->getKeyboardAction() == df::KEY_PRESSED);
 
         if (isSpace && isPress && keyDelayTimer <=0.0f) {
             // Only allow toggling when idle
-            keyDelayTimer = 0.5f;
+            keyDelayTimer = 0.1f;
             if (state == GateState::CLOSED) {
                 LM.writeLog("Gate: OPENING");
                 startOpening();

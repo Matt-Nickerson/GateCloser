@@ -22,6 +22,7 @@ int TrioSpawner::eventHandler(const df::Event* e) {
             WM.markForDelete(this);
             return 1;
         }
+
         // accumulate time using engine frame time (ms)
         m_elapsed_ms += GM.getFrameTime();
 
