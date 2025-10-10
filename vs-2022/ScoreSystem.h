@@ -13,11 +13,14 @@ public:
 	void evilBlocked();        
 	void wizardCrushed();     
 	void wrongAction(const char* reason); 
+	void disableHud();
 
 	// Accessors.
 	int   lives() const { return m_lives; }
 	int   score() const { return m_score; }
 	float multiplier() const { return m_mult; }
+
+	int getLives();
 
 private:
 	// state
@@ -25,6 +28,7 @@ private:
 	int   m_lives = 3;
 	int   m_streak = 0;  // consecutive correct
 	float m_mult = 1.0f; // current multiplier
+	bool gameOver;
 
 	const float MULT_STEP = 0.5f;  // +0.5 per correct
 	const float MULT_MAX = 5.0f;  // cap

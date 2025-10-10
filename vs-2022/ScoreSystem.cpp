@@ -15,9 +15,16 @@ void ScoreSystem::init(int start_lives) {
     m_mult = 1.0f;
     ensureHud();
     updateHud();
+    gameOver = false;
+}
+
+
+int ScoreSystem::getLives() {
+    return m_lives;
 }
 
 void ScoreSystem::ensureHud() {
+
     if (!m_voScore) {
         m_voScore = new df::ViewObject();
         m_voScore->setLocation(df::TOP_LEFT);
@@ -57,12 +64,13 @@ void ScoreSystem::onCorrect() {
 
 void ScoreSystem::onWrong() {
 
-    //If Lives Decreases Past Zero Call GameOver
-    if (m_lives <= 0) {
-        new GameOver;
-    }
-
     if (m_lives > 0) m_lives--;
+
+    //If Lives Decreases Past Zero Call GameOver.
+    if (m_lives <= 0 && !gameOver) {
+        new GameOver;
+        gameOver = true;
+    }
     m_streak = 0;
     m_mult = 1.0f;
 }
@@ -100,4 +108,19 @@ void ScoreSystem::wrongAction(const char* reason) {
     onWrong();
     updateHud();
     LM.writeLog("X %s  (lives=%d, mult=%.1f, score=%d)", reason, m_lives, m_mult, m_score);
+}
+
+void ScoreSystem::disableHud() {
+    if (m_voScore) {
+        WM.markForDelete(m_voScore);
+        m_voScore = nullptr;
+    }
+    if (m_voLives) {
+        WM.markForDelete(m_voLives);
+        m_voLives = nullptr;
+    }
+    if (m_voMult) {
+        WM.markForDelete(m_voMult);
+        m_voMult = nullptr;
+    }
 }

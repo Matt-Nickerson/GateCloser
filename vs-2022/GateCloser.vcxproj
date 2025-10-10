@@ -95,6 +95,7 @@
     <ClInclude Include="ScoreSystem.h" />
     <ClInclude Include="Star.h" />
     <ClInclude Include="Visitor.h" />
+    <ClInclude Include="Walkway.h" />
     <ClInclude Include="Wave.h" />
     <ClInclude Include="WaveSpawner.h" />
   </ItemGroup>
@@ -108,6 +109,7 @@
     <ClCompile Include="ScoreSystem.cpp" />
     <ClCompile Include="Star.cpp" />
     <ClCompile Include="Visitor.cpp" />
+    <ClCompile Include="Walkway.cpp" />
     <ClCompile Include="Wave.cpp" />
     <ClCompile Include="WaveSpawner.cpp" />
   </ItemGroup>
