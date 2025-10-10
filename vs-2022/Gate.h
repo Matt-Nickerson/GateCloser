@@ -1,5 +1,6 @@
 #pragma once
 #include "Object.h"
+#include "GameStart.h"
 
 enum class GateState { CLOSED, OPENING, OPEN, CLOSING };
 
@@ -13,7 +14,7 @@ public:
 
 private:
 	GateState state;
-
+	GameStart* gameStart;
 	int frameCount = 1;
 	int lastFrame = 0;
 	int prevIndex = 0;
