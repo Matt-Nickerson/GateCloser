@@ -2,7 +2,7 @@
 # GATECLOSER
 Matthew Nickerson (mwnickerson@wpi.edu) - Gate + Visitor Assets, Gate logic, Gate collision, Visitor Logic, first version Wave Spawning resource loader functions, Scoring, Streaks, Lives
 
-Richard DeBlasio (rcdeblasio@wpi.edu) - Advanced Wave Spawning, and Bug Fixes.
+Richard DeBlasio (rcdeblasio@wpi.edu) - Advanced Wave Spawning,Background, Title Screen, GameOver Screen, Sound Effects, Additonal Assets, lots of Bug Fixes.
 
 A tiny C++/Dragonfly ASCII game where you control three gates to manage the flow of GOOD, EVIL, and WIZARD visitors. Use timing to block the right ones, let the right ones through, and rack up points with a streak multiplier.
 
