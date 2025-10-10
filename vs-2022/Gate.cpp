@@ -40,7 +40,7 @@ Gate::Gate(bool isOpen, df::Vector position) {
         df::Object* p_o = object_list[i];
 
         if (p_o->getType() == "GameStart") {
-            gameStart = dynamic_cast<GameStart*>(p_o);
+            df::
             break; 
         }
     }
