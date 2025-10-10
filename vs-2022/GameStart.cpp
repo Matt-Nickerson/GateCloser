@@ -11,6 +11,7 @@
 #include "Gate.h"
 #include "WaveSpawner.h"
 #include "ScoreSystem.h"
+#include "Walkway.h"
 
 //GameStart Constructor
 GameStart::GameStart(){
@@ -26,9 +27,6 @@ GameStart::GameStart(){
 
     //Register Events.
     registerInterest(df::KEYBOARD_EVENT);
-
-    //Initalize Variables
-    canPlay = false;
 }
 
 //GameStart Event Handler
@@ -52,16 +50,6 @@ int GameStart::eventHandler(const df::Event* p_e) {
     return 0;
 }
 
-//Set Can Play.
-void GameStart::setCanPlay(bool canplay) {
-    canPlay = canplay;
-}
-
-//Get Can Play.
-bool GameStart::getCanPlay() {
-    return canPlay;
-}
-
 // Populate Game Once Game Started.
 void GameStart::start() {
 
@@ -78,11 +66,18 @@ void GameStart::start() {
     auto* gate2 = new Gate(true, df::Vector(rightX, centerY));
     auto* gate3 = new Gate(false, df::Vector(rightX, centerY + 8));
 
+    //Spawn Walkways in Lanes.
+    new Walkway(df::Vector(view.getCorner().getX(), centerY - 8));
+    new Walkway(df::Vector(view.getCorner().getX(), centerY));
+    new Walkway(df::Vector(view.getCorner().getX(), centerY + 8));
+
     //Spawn Wave.
     new WaveSpawner(gate1, gate2, gate3);
 
-    //Player can Play.
-    canPlay = true;
+    // Play "nuke" sound.
+    df::Sound* p_sound = RM.getSound("gate");
+    if (p_sound)
+        p_sound->play();
 
     //When game starts, become inactive.
     setActive(false);

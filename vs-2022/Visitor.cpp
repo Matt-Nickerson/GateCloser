@@ -185,6 +185,8 @@ void Visitor::onCollision(const df::EventCollision* c) {
 }
 void Visitor::correct(const char* msg) {
 	LM.writeLog("OK", msg);
+	if (ScoreSystem::get().getLives() <= 0) return;
+
 	switch (m_kind) {
 	case VisitorKind::GOOD:
 		ScoreSystem::get().goodLetThrough();

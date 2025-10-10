@@ -52,13 +52,12 @@ void populateWorld(void) {
 	for (int i = 0; i < 32; i++)
 		new Star;
 
-
 	new GameStart;
 }
 
 
-//Load Sprites.
 void loadResources(void) {
+	//Load Sprites.
 	RM.loadSprite("sprites/door_opening.txt", "gate_opening");
 	RM.loadSprite("sprites/door_closing.txt", "gate_closing"); 
 	RM.loadSprite("sprites/door_open_idle.txt", "gate_open_idle");
@@ -68,6 +67,13 @@ void loadResources(void) {
 	RM.loadSprite("sprites/wizard_visitor.txt", "wizard_visitor");
 	RM.loadSprite("sprites/gamestart-spr.txt", "gamestart");
 	RM.loadSprite("sprites/gameover-spr.txt", "gameover");
+	RM.loadSprite("sprites/walkway.txt", "walkway");
+
+	//Load Sounds.
+	RM.loadSound("sounds/gate.wav", "gate");
+	RM.loadSound("sounds/scream.wav", "scream");
+	RM.loadSound("sounds/explosion.wav", "explosion");
+
 }
 
 void clearVisitors() {

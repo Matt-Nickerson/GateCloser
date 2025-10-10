@@ -5,6 +5,7 @@
 #include "WorldManager.h"
 #include "GameManager.h"
 #include "ResourceManager.h"
+#include "ScoreSystem.h"
 
 // Game includes.
 #include "GameOver.h"
@@ -24,6 +25,16 @@ GameOver::GameOver() {
 
     //Register for Events.
     registerInterest(df::STEP_EVENT);
+
+    // Play "explosion" sound.
+    df::Sound* p_sound = RM.getSound("explosion");
+    if (p_sound)
+        p_sound->play();
+
+    // Play "scream" sound.
+    df::Sound* p_sound1 = RM.getSound("scream");
+    if (p_sound1)
+        p_sound1->play();
 
     //Stop Wave Spawning
     df::ObjectList object_list = WM.getAllObjects(true);
@@ -63,11 +74,13 @@ GameOver::~GameOver() {
     df::ObjectList object_list = WM.getAllObjects(true);
     for (int i = 0; i < object_list.getCount(); i++) {
         df::Object* p_o = object_list[i];
-        if (p_o->getType() == "gate" || p_o->getType() == "Wave" || p_o->getType() == "visitor") WM.markForDelete(p_o);
+        if (p_o->getType() == "gate" || p_o->getType() == "Wave" || p_o->getType() == "visitor" || p_o->getType() == "ViewObjects") WM.markForDelete(p_o);
         if (p_o->getType() == "GameStart") {
 
             //Re-enable Start Screen.
             p_o->setActive(true);
+
+            ScoreSystem::get().disableHud();
         }
 
     }
