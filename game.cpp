@@ -10,7 +10,10 @@
 #include "ObjectList.h"
 #include "vs-2022/ScoreSystem.h"
 #include "math.h";
+#include "vs-2022/GameStart.h"
+#include "vs-2022/Star.h"
 
+#include "vs-2022/GameOver.h"
 
 void loadResources(void);
 void populateWorld(void);
@@ -45,21 +48,12 @@ int main(int, char**) {
 //Populate World With Game Objects!
 void populateWorld(void) {
 
-	//Set Starting Lives.
-	ScoreSystem::get().init(3);
+	// Create some Stars.
+	for (int i = 0; i < 32; i++)
+		new Star;
 
-	//Calulate Positions of Gates.
-	const df::Box& view = WM.getView();
-	float rightX = view.getCorner().getX() + view.getHorizontal() - 12;
-	float centerY = view.getCorner().getY() + view.getVertical() / 2.0f;
 
-	//Spawn Gates at Positions.
-	auto* gate1 = new Gate(false, df::Vector(rightX, centerY - 8));
-	auto* gate2 = new Gate(true, df::Vector(rightX, centerY));
-	auto* gate3 = new Gate(false, df::Vector(rightX, centerY + 8));
-
-	//Spawn Wave Spawner.
-	new WaveSpawner(gate1,gate2,gate3);
+	new GameStart;
 }
 
 
@@ -72,6 +66,8 @@ void loadResources(void) {
 	RM.loadSprite("sprites/good_visitor.txt", "good_visitor");
 	RM.loadSprite("sprites/evil_visitor.txt", "evil_visitor");
 	RM.loadSprite("sprites/wizard_visitor.txt", "wizard_visitor");
+	RM.loadSprite("sprites/gamestart-spr.txt", "gamestart");
+	RM.loadSprite("sprites/gameover-spr.txt", "gameover");
 }
 
 void clearVisitors() {

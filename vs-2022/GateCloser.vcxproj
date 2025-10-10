@@ -89,8 +89,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="GameOver.h" />
+    <ClInclude Include="GameStart.h" />
     <ClInclude Include="Gate.h" />
     <ClInclude Include="ScoreSystem.h" />
+    <ClInclude Include="Star.h" />
     <ClInclude Include="Visitor.h" />
     <ClInclude Include="Wave.h" />
     <ClInclude Include="WaveSpawner.h" />
@@ -99,8 +102,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\game.cpp" />
+    <ClCompile Include="GameOver.cpp" />
+    <ClCompile Include="GameStart.cpp" />
     <ClCompile Include="Gate.cpp" />
     <ClCompile Include="ScoreSystem.cpp" />
+    <ClCompile Include="Star.cpp" />
     <ClCompile Include="Visitor.cpp" />
     <ClCompile Include="Wave.cpp" />
     <ClCompile Include="WaveSpawner.cpp" />

@@ -1,6 +1,7 @@
 #include "ScoreSystem.h"
 #include "WorldManager.h"
 #include "LogManager.h"
+#include "GameOver.h"
 
 ScoreSystem& ScoreSystem::get() {
     static ScoreSystem inst;
@@ -55,6 +56,12 @@ void ScoreSystem::onCorrect() {
 }
 
 void ScoreSystem::onWrong() {
+
+    //If Lives Decreases Past Zero Call GameOver
+    if (m_lives <= 0) {
+        new GameOver;
+    }
+
     if (m_lives > 0) m_lives--;
     m_streak = 0;
     m_mult = 1.0f;

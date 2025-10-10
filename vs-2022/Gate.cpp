@@ -4,6 +4,7 @@
 #include "ResourceManager.h"
 #include "WorldManager.h"
 #include "LogManager.h"
+#include "GameStart.h"
 #include <chrono>
 
 Gate::Gate(bool isOpen, df::Vector position) {
@@ -31,6 +32,18 @@ Gate::Gate(bool isOpen, df::Vector position) {
     registerInterest(df::STEP_EVENT);
     registerInterest(df::KEYBOARD_EVENT);
     keyDelayTimer = 0.0f;
+
+
+
+    df::ObjectList object_list = WM.getAllObjects(true);
+    for (int i = 0; i < object_list.getCount(); i++) {
+        df::Object* p_o = object_list[i];
+
+        if (p_o->getType() == "GameStart") {
+            df::
+            break; 
+        }
+    }
 }
 
 void Gate::startOpening() {
@@ -62,7 +75,7 @@ int Gate::eventHandler(const df::Event* e) {
         const bool isSpace = (k->getKey() == df::Keyboard::SPACE) || (k->getKey() == ' ');
         const bool isPress = (k->getKeyboardAction() == df::KEY_PRESSED);
 
-        if (isSpace && isPress && keyDelayTimer <= 0.0f) {
+        if (isSpace && isPress && keyDelayTimer <= 0.0f && ) {
 
             // Only allow toggling when idle
             keyDelayTimer = 0.1f;
