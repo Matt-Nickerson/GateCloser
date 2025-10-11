@@ -78,20 +78,35 @@ sprites/
   good_visitor.txt
   evil_visitor.txt
   wizard_visitor.txt
+  walkway.txt
+  wizard_visitor.txt
+  gameover-spr.txt
+  gamestart-spr.txt
+
+sounds/
+  explosion.wav
+  gate.wav
+  scream.wav
 
 src/
   Gate.h
   Gate.cpp
   Visitor.h
   Visitor.cpp
-  GateController.h
-  GateController.cpp
   ScoreSystem.h
   ScoreSystem.cpp
   Wave.h
   Wave.cpp
   WaveSpawner.cpp
   WaveSpawner.h
+  Walkway.h
+  Walkway.cpp
+  Star.h
+  Star.cpp
+  GameStart.h
+  GameStart.cpp
+  GameOver.h
+  GameOver.cpp
   game.cpp
 ```
 
